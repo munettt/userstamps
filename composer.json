@@ -1,0 +1,26 @@
+{
+    "name": "munettt/userstamps",
+    "description": "Userstamps for Laravel",
+    "authors": [
+        {
+            "name": "Munzir Rosdi",
+            "email": "munzir@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Munettt\\Userstamps\\": "src/"
+        }
+    },
+    "require": {
+        "php" : "^7.2"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Munettt\\Userstamps\\UserstampsServiceProvider"
+            ]
+        }
+    }
+}
