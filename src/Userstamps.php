@@ -11,7 +11,7 @@ trait Userstamps
      */
     public static function bootUserstamps()
     {
-        static::registerEvents();
+        static::registerEvents( method_exists(get_called_class(), 'runSoftDelete') );
     }
 
     public function createdUser()
@@ -29,7 +29,7 @@ trait Userstamps
      *
      * @return void
      */
-    public static function registerEvents()
+    public static function registerEvents($useDelete=false)
     {
         //timestamps
         static::creating(function($model)
@@ -42,12 +42,18 @@ trait Userstamps
             $model->updated_by = auth()->id();
         });
 
-        static::deleting(function($model)
-        {
-           if ( method_exists($this, 'runSoftDelete') ) {
+        if ( $useDelete ) {
+
+            static::deleting(function($model)
+            {
                 $model->deleted_by = auth()->id();
-           }
-        });
+            });
+
+            static::restoring(function($model)
+            {
+                $model->deleted_by = auth()->id();
+            });
+        }
     }
 
     /**
